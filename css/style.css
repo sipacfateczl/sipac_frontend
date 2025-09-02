@@ -1,0 +1,121 @@
+
+    :root{
+      --bg:#0f1020;           /* fundo geral */
+      --panel:#1a1b36;        /* cartões/painéis */
+      --muted:#8b8db2;        /* textos secundários */
+      --text:#e9e9f7;         /* textos primários */
+      --pri:#7c3aed;          /* roxo principal */
+      --pri-2:#22d3ee;        /* ciano de destaque */
+      --ok:#22c55e;           /* ok */
+      --warn:#f59e0b;         /* atenção */
+      --danger:#ef4444;       /* crítico */
+      --card-radius:20px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; color:var(--text);
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.25), transparent 60%),
+                  radial-gradient(900px 500px at 110% 10%, rgba(34,211,238,.15), transparent 60%),
+                  var(--bg);
+      overflow:hidden;
+    }
+    .app{display:grid; grid-template-columns: 260px 1fr; height:100%}
+
+    /* SIDEBAR */
+    .sidebar{
+      background: linear-gradient(180deg, #161733 0%, #0f1027 100%);
+      border-right: 1px solid rgba(255,255,255,.06);
+      padding:22px 16px; display:flex; flex-direction:column; gap:18px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; padding:6px 8px}
+    .logo{width:36px; height:36px; border-radius:12px; display:grid; place-items:center;
+      background: linear-gradient(135deg,var(--pri),#9b5cf9 50%, var(--pri-2)); box-shadow: var(--shadow);}
+    .brand h1{font-size:16px; letter-spacing:.5px; margin:0}
+
+    .nav{margin-top:8px; display:flex; flex-direction:column; gap:8px}
+    .nav button{all:unset; display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer;
+      color:var(--muted)}
+    .nav button.active, .nav button:hover{background:rgba(124,58,237,.15); color:#fff}
+
+    .filters{margin-top:10px; background:var(--panel); border-radius:16px; padding:14px; box-shadow:var(--shadow);}
+    .filters h3{margin:0 0 10px; font-size:14px; color:#c9c9f2}
+    .filter-group{margin-bottom:12px}
+    .filter-group label{display:block; font-size:12px; opacity:.9; margin-bottom:8px}
+    .checks{display:flex; flex-direction:column; gap:6px}
+    .checks .row{display:flex; align-items:center; gap:8px; font-size:13px}
+    .checks input[type="checkbox"]{accent-color:var(--pri)}
+    .range{display:flex; align-items:center; gap:8px}
+    .range input{width:100%}
+
+    .footer{margin-top:auto; font-size:11px; color:var(--muted); opacity:.9}
+
+    /* MAIN */
+    .main{padding:22px; overflow:auto}
+    .header{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .title{display:flex; align-items:center; gap:12px}
+    .title h2{margin:0; font-size:22px}
+    .actions{display:flex; gap:10px}
+    .btn{border:none; border-radius:14px; padding:10px 14px; font-weight:600; cursor:pointer}
+    .btn.pri{background:linear-gradient(135deg,var(--pri),#9b5cf9); color:white}
+    .btn.ghost{background:rgba(34,211,238,.12); color:#c9fbff}
+
+    /* KPIs */
+    .grid{display:grid; gap:16px}
+    .kpis{grid-template-columns: repeat(3, minmax(220px,1fr))}
+    .card{background:var(--panel); border-radius:var(--card-radius); box-shadow:var(--shadow); padding:16px}
+    .card h4{margin:0 0 6px; font-size:13px; color:#cfd1ff; letter-spacing:.4px}
+    .big{font-size:28px; font-weight:800}
+    .trend{font-size:12px; color:var(--muted)}
+
+    /* CHARTS */
+    .charts{grid-template-columns: 2fr 1fr; align-items:stretch}
+    .split{grid-template-columns: 1fr 1fr}
+    canvas{max-height:330px}
+
+    /* RACK (ARARA) */
+    .rack{position:relative; height:220px; background:linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+      border-radius:16px; padding:16px; overflow:hidden}
+    .barra{position:absolute; left:20px; right:20px; top:56px; height:10px; background:linear-gradient(90deg, #a0a1d6 0%, #d6d8ff 100%);
+      border-radius:8px; box-shadow: inset 0 -2px 6px rgba(0,0,0,.25)}
+    .poste{position:absolute; width:10px; top:30px; bottom:20px; background:linear-gradient(#cfcff6, #9394c7); border-radius:6px}
+    .poste.left{left:18px} .poste.right{right:18px}
+    .hanger{position:absolute; top:16px; display:flex; flex-direction:column; align-items:center; gap:6px; width:64px}
+    .hook{width:22px; height:22px; border:2px solid #cfd1ff; border-bottom:none; border-radius:50% 50% 0 0}
+    .camisa{width:56px; height:40px; border-radius:10px; box-shadow: inset 0 -6px 12px rgba(0,0,0,.25), 0 8px 18px rgba(0,0,0,.25)}
+    .tag{font-size:11px; color:var(--muted)}
+    .status-dot{width:10px; height:10px; border-radius:50%}
+
+    /* TABLE */
+    .toolbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:4px}
+    .search{flex:1; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:10px 12px; color:var(--text)}
+    table{width:100%; border-collapse:separate; border-spacing:0 8px}
+    th{font-size:12px; color:#cfd1ff; text-align:left; padding:8px 10px}
+    td{padding:12px 10px; background:rgba(255,255,255,.03)}
+    tr{border-radius:12px}
+    tr td:first-child{border-top-left-radius:12px; border-bottom-left-radius:12px}
+    tr td:last-child{border-top-right-radius:12px; border-bottom-right-radius:12px}
+    .row-actions{display:flex; gap:8px}
+    .icon-btn{border:none; background:rgba(255,255,255,.06); color:#fff; padding:6px 8px; border-radius:10px; cursor:pointer}
+    .pill{padding:4px 8px; border-radius:999px; font-size:11px}
+
+    /* MODAL */
+    dialog{background:var(--panel); color:var(--text); border:none; border-radius:18px; box-shadow:var(--shadow); width:min(560px, 92vw);}
+    dialog::backdrop{background:rgba(0,0,25,.6)}
+    .modal-body{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+    .modal-body label{font-size:12px}
+    .input{width:100%; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:var(--text);
+      padding:10px 12px; border-radius:12px}
+    .modal-actions{display:flex; justify-content:flex-end; gap:8px; margin-top:10px}
+
+    /* RESPONSIVO */
+    @media (max-width: 1100px){
+      .app{grid-template-columns: 1fr}
+      .sidebar{display:none}
+      .charts{grid-template-columns: 1fr}
+      .kpis{grid-template-columns: 1fr}
+      .split{grid-template-columns: 1fr}
+    }
+
+    
