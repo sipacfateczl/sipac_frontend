@@ -284,3 +284,34 @@ function showToast(message, type = "info") {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
+
+
+const btnMenu = document.getElementById('btnMenu');
+const sidebar = document.querySelector('.sidebar');
+
+// Toggle sidebar ao clicar no botão
+btnMenu.addEventListener('click', () => {
+  sidebar.classList.toggle('show');
+  btnMenu.classList.toggle('active'); // adiciona/remover classe 'active'
+});
+
+// Fechar sidebar ao clicar em um botão do menu (mobile)
+document.querySelectorAll('.nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if(window.innerWidth <= 1100) {
+      sidebar.classList.remove('show');
+      btnMenu.classList.remove('active'); // remove a classe quando fecha
+    }
+    const page = btn.dataset.page;
+    if(page) window.location.href = page;
+  });
+});
+
+// Fechar sidebar ao clicar fora dela (opcional)
+document.addEventListener('click', (e) => {
+  if(window.innerWidth > 1100) return; // só mobile
+  if(!sidebar.contains(e.target) && !btnMenu.contains(e.target)) {
+    sidebar.classList.remove('show');
+    btnMenu.classList.remove('active'); // remove classe se clicar fora
+  }
+});

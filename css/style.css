@@ -2,7 +2,6 @@
     --bg: #0f1020;
     /* fundo geral */
     --panel: #1a1b36;
-    
     /* cartões/painéis */
     --muted: #8b8db2;
     /* textos secundários */
@@ -10,7 +9,6 @@
     /* textos primários */
     --pri: #7c3aed;
     --pri2: #9a2aed;
-    
     /* ciano de destaque */
     --ok: #22c55e;
     /* ok */
@@ -41,22 +39,48 @@ body {
     overflow: hidden;
 }
 
+/* Layout principal */
 .app {
     display: grid;
-    grid-template-columns: 260px 1fr;
-    height: 100%
+    grid-template-columns: 280px 1fr;
+    height: 100%;
+    transition: all 0.3s ease;
 }
 
-/* SIDEBAR */
+/* Sidebar */
 .sidebar {
-    background: linear-gradient(180deg, #161733 0%, #0f1027 100%);
-    border-right: 1px solid rgba(255, 255, 255, .06);
+    background: var(--panel);
     padding: 22px 16px;
     display: flex;
     flex-direction: column;
     gap: 18px;
+    border-right: 1px solid rgba(255, 255, 255, .06);
+    width: 280px;
+    transition: transform 0.3s ease;
+    background: linear-gradient(180deg, #161733 0%, #0f1027 100%);
 }
 
+.sidebar.show {
+    transform: translateX(0);
+}
+
+/* Botão Menu (mobile) */
+#btnMenu {
+    display: none;
+    font-size: 1.4rem;
+    padding: 6px 12px;
+    background: transparent;
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1001;
+}
+
+/* SIDEBAR */
 .brand {
     display: flex;
     align-items: center;
@@ -65,9 +89,9 @@ body {
 }
 
 .logo img {
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
 }
 
 
@@ -124,7 +148,6 @@ body {
     font-size: 12px;
     opacity: .9;
     margin-bottom: 8px
-    margin-top:
 }
 
 .checks {
@@ -341,14 +364,17 @@ canvas {
 
 .search {
     flex: 1;
-    min-width: 300px;   /* garante que o input tenha no mínimo 300px */
-    max-width: 600px;   /* limite para não ocupar a tela toda */
+    min-width: 300px;
+    /* garante que o input tenha no mínimo 300px */
+    max-width: 600px;
+    /* limite para não ocupar a tela toda */
     background: rgba(255, 255, 255, .06);
     border: 1px solid rgba(255, 255, 255, .08);
     border-radius: 12px;
     padding: 10px 12px;
     color: var(--text);
 }
+
 table {
     width: 100%;
     border-collapse: separate;
@@ -421,12 +447,14 @@ dialog::backdrop {
     gap: 12px
 }
 
-.modal-body label {
-       font-size: 13px;
+.modal-body label,
+#relatorios label {
+    font-size: 13px;
     color: var(--muted);
     display: block;
     margin-bottom: 8px;
-    margin-top: 8px; /* espaçamento superior */
+    margin-top: 8px;
+    /* espaçamento superior */
 }
 
 .input {
@@ -445,29 +473,6 @@ dialog::backdrop {
     margin-top: 10px
 }
 
-/* RESPONSIVO */
-@media (max-width: 1100px) {
-    .app {
-        grid-template-columns: 1fr
-    }
-
-    .sidebar {
-        display: none
-    }
-
-    .charts {
-        grid-template-columns: 1fr
-    }
-
-    .kpis {
-        grid-template-columns: 1fr
-    }
-
-    .split {
-        grid-template-columns: 1fr
-    }
-}
-
 /* Relatórios */
 #relatorios h2 {
     font-size: 18px;
@@ -475,13 +480,6 @@ dialog::backdrop {
     color: var(--text);
 }
 
-#relatorios label {
-    font-size: 13px;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 8px;
-    margin-top: 8px; /* espaçamento superior */
-}
 #resultadoRelatorio {
     background: var(--pri-2);
     border-radius: var(--card-radius);
@@ -492,15 +490,13 @@ dialog::backdrop {
     color: var(--text);
 }
 
-/* Tabelas dentro dos relatórios */
 #resultadoRelatorio table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 8px
 }
 
-#resultadoRelario tr {
-
+#resultadoRelatorio tr {
     border-radius: 12px
 }
 
@@ -528,49 +524,221 @@ dialog::backdrop {
 
 /* Card padrão */
 .relatorio-card {
-  background: var(--pri);
-  border-radius: var(--card-radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-  min-height: 120px;
-  transition: background 0.3s ease;
+    background: var(--pri);
+    border-radius: var(--card-radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    min-height: 120px;
+    transition: background 0.3s ease;
 }
 
 /* Quando relatório gerado */
 .relatorio-card.ativo {
-  background: linear-gradient(135deg, var(--pri), var(--pri-2));
-  color: white;
+    background: linear-gradient(135deg, var(--pri), var(--pri-2));
+    color: white;
 }
 
 /* Texto placeholder */
 .placeholder {
-  text-align: center;
-  color: var(--muted);
-  font-size: 14px;
-  opacity: 0.8;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    opacity: 0.8;
 }
 
 .toast {
-  position: fixed;
-  top: 20px;
-  left: 50%; /* centraliza horizontalmente */
-  transform: translateX(-50%) translateY(-20px);
-  background: #323232;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 9999;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    /* centraliza horizontalmente */
+    transform: translateX(-50%) translateY(-20px);
+    background: #323232;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 9999;
 }
 
 .toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
-.toast.success { background: #28a745; }
-.toast.error   { background: #dc3545; }
-.toast.info    { background: #007bff; }
+.toast.success {
+    background: #28a745;
+}
+
+.toast.error {
+    background: #dc3545;
+}
+
+.toast.info {
+    background: #007bff;
+}
+
+/* RESPONSIVO */
+@media (max-width: 1100px) {
+    .app {
+        grid-template-columns: 1fr
+    }
+
+    #btnMenu {
+        display: block;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -280px;
+        /* começa escondida */
+        top: 0;
+        width: 260px;
+        height: 100%;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        background: linear-gradient(180deg, #161733 0%, #0f1027 100%);
+        display: flex;
+        flex-direction: column;
+        padding: 22px 16px;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .charts,
+    .kpis,
+    .split {
+        grid-template-columns: 1fr;
+        /* gráficos e KPIs empilhados */
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .modal-body {
+        grid-template-columns: 1fr;
+    }
+
+    .rack {
+        height: 150px;
+        padding: 12px;
+    }
+
+    .hanger {
+        width: 48px;
+    }
+
+    .camisa {
+        width: 40px;
+        height: 28px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .header h2 {
+        font-size: 18px;
+    }
+
+    .btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .filters {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 12px;
+    }
+}
+
+/* Celulares pequenos */
+@media (max-width: 480px) {
+    .title h2 {
+        font-size: 16px;
+    }
+
+    .tag {
+        font-size: 10px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    #resultadoRelatorio {
+        font-size: 13px;
+        padding: 12px;
+    }
+
+    #resultadoRelatorio th,
+    #resultadoRelatorio td {
+        padding: 8px 6px;
+    }
+}
+/* Responsivo: botão Menu quebra linha */
+@media (max-width: 1100px) {
+    #btnMenu.active {
+        width: 100%;
+        margin-bottom: 1px; /* espaço abaixo */
+        text-align: left;
+    }
+
+    /* Faz os elementos dentro do header empilharem quando o botão estiver ativo */
+    #btnMenu.active ~ .title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+    }
+}
+/* Mobile: quebra os elementos do header em coluna */
+@media (max-width: 1100px) {
+    .header {
+        flex-direction: column; /* empilha os elementos */
+        align-items: flex-start;
+        gap: 12px; /* espaço entre eles */
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap; /* permite que os botões quebrem linha se não couberem */
+        gap: 8px;
+        width: 100%;
+    }
+
+    .actions .btn {
+        flex: 1 1 auto; /* cada botão ocupa espaço necessário */
+        min-width: 140px; /* evita que fiquem muito estreitos */
+    }
+
+    .title h2 {
+        font-size: 18px; /* ajusta o tamanho do título para mobile */
+    }
+}
