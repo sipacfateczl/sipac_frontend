@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Estoque IoT – Relatórios</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <div class="app">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">
+                    <img src="img/logo.png" alt="Logo Estoque IoT">
+                </div>
+                <h1>Sistema de Iot para Estoque</h1>
+            </div>
+
+            <div class="nav">
+                <button onclick="window.location.href='index.html'">📊 Dashboard</button>
+                <button class="active">📑 Relatórios</button>
+            </div>
+            <div class="footer">⚙️ Gerencie os itens do estoque de forma simples e prática.</div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main">
+            <section id="relatorios" class="card p-4 mt-6">
+                <h2 class="text-xl font-bold mb-4">📊 Relatórios Personalizados</h2>
+
+                <!-- Filtros -->
+                <div class="flex gap-4 flex-wrap mb-4">
+                    <div>
+                        <label>Data Inicial</label>
+                        <input type="date" id="dataInicio" class="input">
+                    </div>
+                    <div>
+                        <label>Data Final</label>
+                        <input type="date" id="dataFim" class="input">
+                    </div>
+                    <div>
+                        <label>Tipo de Relatório</label>
+                        <select id="tipoRelatorio" class="input">
+                            <option value="vendas">Vendas</option>
+                            <option value="compras">Compras</option>
+                            <option value="estoque">Estoque Baixo</option>
+                            <option value="valor">Valorização de Itens</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Categoria</label>
+                        <select id="categoriaRelatorio" class="input">
+                            <option value="">Todas</option>
+                            <option value="camisetas">Camisetas</option>
+                            <option value="calcas">Calças</option>
+                            <option value="sapatos">Sapatos</option>
+                        </select>
+                    </div>
+                    &nbsp;
+                    <div class="flex items-end">
+
+                        <button onclick="gerarRelatorio()" class="btn pri">Gerar Relatório</button>
+
+                    </div>
+                </div>
+
+                <!-- Resultado -->
+                <!-- Resultado -->
+                <div id="resultadoRelatorio" class="relatorio-card overflow-auto">
+                    <p id="placeholderRelatorio" class="placeholder">
+                        📌 Nenhum relatório foi gerado ainda. Use os filtros acima e clique em <b>Gerar Relatório</b>.
+                    </p>
+                </div>
+                &nbsp;
+                <!-- Exportação -->
+                <div class="mt-4 flex gap-2">
+                    <button onclick="exportarPDF()" class="btn ghost">📄 Exportar PDF</button>
+                    <button onclick="exportarExcel()" class="btn ghost">📊 Exportar Excel</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/relatorios.js"></script>
+</body>
+
+</html>

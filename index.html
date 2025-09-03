@@ -11,6 +11,12 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="css/style.css" />
 
+  <!-- Bibliotecas de exportação -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.0/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+
 </head>
 
 <body>
@@ -18,15 +24,18 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="brand">
-        <div class="logo">💡</div>
-        <h1>Estoque IoT</h1>
+        <div class="logo">
+          <img src="img/logo.png" alt="Logo Estoque IoT">
+        </div>
+        <h1>Sistema de Iot para Estoque</h1>
       </div>
 
       <div class="nav">
-        <button class="active">📊 Dashboard</button>
-        <button>🧥 Itens</button>
-        <button>📜 Detalhamento</button>
+        <button class="active" data-page="index.html">📊 Dashboard</button>
+     
+        <button data-page="relatorios.html">📑 Relatório</button>
       </div>
+
 
       <section class="filters">
         <h3>Filtros</h3>
@@ -130,6 +139,7 @@
 
       <!-- TABELA -->
       <section class="card" style="margin-top:16px">
+         <h4>Gestão de Itens </h4>
         <div class="toolbar">
           <input class="search" id="search" placeholder="Buscar por nome, tag, categoria…" />
           <select class="input" id="sort">
@@ -159,146 +169,52 @@
           </table>
         </div>
       </section>
-    </main>
-  </div>
-  <!-- ================== RELATÓRIOS PERSONALIZADOS ================== -->
-  <section id="relatorios" class="card p-4 mt-6">
-    <h2 class="text-xl font-bold mb-4">📊 Relatórios Personalizados</h2>
 
-    <!-- Filtros -->
-    <div class="flex gap-4 flex-wrap mb-4">
-      <div>
-        <label>Data Inicial</label>
-        <input type="date" id="dataInicio" class="input">
-      </div>
-      <div>
-        <label>Data Final</label>
-        <input type="date" id="dataFim" class="input">
-      </div>
-      <div>
-        <label>Tipo de Relatório</label>
-        <select id="tipoRelatorio" class="input">
-          <option value="vendas">Vendas</option>
-          <option value="compras">Compras</option>
-          <option value="estoque">Estoque Baixo</option>
-          <option value="valor">Valorização de Itens</option>
-        </select>
-      </div>
-      <div>
-        <label>Categoria</label>
-        <select id="categoriaRelatorio" class="input">
-          <option value="">Todas</option>
-          <option value="camisetas">Camisetas</option>
-          <option value="calcas">Calças</option>
-          <option value="sapatos">Sapatos</option>
-        </select>
-      </div>
-      <div class="flex items-end">
-        <button onclick="gerarRelatorio()" class="btn">Gerar Relatório</button>
-      </div>
-    </div>
-
-    <!-- Resultado -->
-    <div id="resultadoRelatorio" class="overflow-auto"></div>
-
-    <!-- Exportação -->
-    <div class="mt-4 flex gap-2">
-      <button onclick="exportarPDF()" class="btn">📄 Exportar PDF</button>
-      <button onclick="exportarExcel()" class="btn">📊 Exportar Excel</button>
-    </div>
-  </section>
+      <!-- MODAL ADD/EDIT -->
+      <dialog id="modal">
+        <form method="dialog">
+          <h3 style="margin:8px 0 12px">Novo/Editar Item</h3>
+          <div class="modal-body">
+            <div>
+              <label>Tag (RFID)</label>
+              <input class="input" id="mTag" placeholder="0001" />
+            </div>
+            <div>
+              <label>Peça</label>
+              <input class="input" id="mNome" placeholder="Camiseta Oversize" />
+            </div>
+            <div>
+              <label>Categoria</label>
+              <select class="input" id="mCat">
+                <option>Camisetas</option>
+                <option>Calças</option>
+                <option>Vestidos</option>
+                <option>Jaquetas</option>
+                <option>Acessórios</option>
+              </select>
+            </div>
+            <div>
+              <label>Preço (R$)</label>
+              <input class="input" id="mPreco" type="number" step="0.01" />
+            </div>
+            <div>
+              <label>Quantidade</label>
+              <input class="input" id="mQtd" type="number" />
+            </div>
+            <div>
+              <label>Arara/Setor</label>
+              <input class="input" id="mArara" placeholder="A1" />
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn ghost" value="cancel">Cancelar</button>
+            <button class="btn pri" id="mSalvar" value="default">Salvar</button>
+          </div>
+        </form>
+      </dialog>
 
 
-  <!-- MODAL ADD/EDIT -->
-  <dialog id="modal">
-    <form method="dialog">
-      <h3 style="margin:8px 0 12px">Novo/Editar Item</h3>
-      <div class="modal-body">
-        <div>
-          <label>Tag (RFID)</label>
-          <input class="input" id="mTag" placeholder="0001" />
-        </div>
-        <div>
-          <label>Peça</label>
-          <input class="input" id="mNome" placeholder="Camiseta Oversize" />
-        </div>
-        <div>
-          <label>Categoria</label>
-          <select class="input" id="mCat">
-            <option>Camisetas</option>
-            <option>Calças</option>
-            <option>Vestidos</option>
-            <option>Jaquetas</option>
-            <option>Acessórios</option>
-          </select>
-        </div>
-        <div>
-          <label>Preço (R$)</label>
-          <input class="input" id="mPreco" type="number" step="0.01" />
-        </div>
-        <div>
-          <label>Quantidade</label>
-          <input class="input" id="mQtd" type="number" />
-        </div>
-        <div>
-          <label>Arara/Setor</label>
-          <input class="input" id="mArara" placeholder="A1" />
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="btn ghost" value="cancel">Cancelar</button>
-        <button class="btn pri" id="mSalvar" value="default">Salvar</button>
-      </div>
-    </form>
-  </dialog>
-  <!-- ================== RELATÓRIOS PERSONALIZADOS ================== -->
-  <section id="relatorios" class="card p-4 mt-6">
-    <h2 class="text-xl font-bold mb-4">📊 Relatórios Personalizados</h2>
-
-    <!-- Filtros -->
-    <div class="flex gap-4 flex-wrap mb-4">
-      <div>
-        <label>Data Inicial</label>
-        <input type="date" id="dataInicio" class="input">
-      </div>
-      <div>
-        <label>Data Final</label>
-        <input type="date" id="dataFim" class="input">
-      </div>
-      <div>
-        <label>Tipo de Relatório</label>
-        <select id="tipoRelatorio" class="input">
-          <option value="vendas">Vendas</option>
-          <option value="compras">Compras</option>
-          <option value="estoque">Estoque Baixo</option>
-          <option value="valor">Valorização de Itens</option>
-        </select>
-      </div>
-      <div>
-        <label>Categoria</label>
-        <select id="categoriaRelatorio" class="input">
-          <option value="">Todas</option>
-          <option value="camisetas">Camisetas</option>
-          <option value="calcas">Calças</option>
-          <option value="sapatos">Sapatos</option>
-        </select>
-      </div>
-      <div class="flex items-end">
-        <button onclick="gerarRelatorio()" class="btn">Gerar Relatório</button>
-      </div>
-    </div>
-
-    <!-- Resultado -->
-    <div id="resultadoRelatorio" class="overflow-auto"></div>
-
-    <!-- Exportação -->
-    <div class="mt-4 flex gap-2">
-      <button onclick="exportarPDF()" class="btn">📄 Exportar PDF</button>
-      <button onclick="exportarExcel()" class="btn">📊 Exportar Excel</button>
-    </div>
-  </section>
-
-  <script src="js/js.js"></script>
+      <script src="js/js.js"></script>
 </body>
 
 </html>
